@@ -1,0 +1,12 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": ["entrypoints", "src", "tests", ".wxt/wxt.d.ts"],
+  "exclude": ["node_modules", ".output"]
+}

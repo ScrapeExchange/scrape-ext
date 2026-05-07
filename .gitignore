@@ -34,3 +34,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# wxt / browser extension
+node_modules/
+.wxt/
+.output/
+.web-ext.config.ts
+*.log
+coverage/
