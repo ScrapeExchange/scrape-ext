@@ -5,6 +5,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': resolve(__dirname, 'src'),
+      'wxt/browser': resolve(__dirname, 'tests/wxt-browser-shim.ts'),
     },
   },
   test: {
