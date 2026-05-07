@@ -1,3 +1,5 @@
+import { bootstrap } from '~/background/router';
+
 export default defineBackground(() => {
-  // placeholder — full implementation in Task 16
+  void bootstrap();
 });

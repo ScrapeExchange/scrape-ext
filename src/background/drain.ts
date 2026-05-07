@@ -10,6 +10,7 @@ import {
 } from '~/background/rateLimit';
 import { scheduleRetry } from '~/background/retry';
 import { submitItem } from '~/background/submit';
+import { setJSON } from '~/shared/storage';
 
 export async function drainOnce(): Promise<void> {
   const head = await peekHead();
@@ -44,6 +45,7 @@ export async function drainOnce(): Promise<void> {
   const incremented = { ...head, attempts: head.attempts + 1 };
   const sched = await scheduleRetry(incremented);
   if (sched.scheduled) {
+    await setJSON(`pendingRetry:${head.id}`, incremented);
     await updateHistoryStatus(head.id, 'retrying', result.lastError);
     await recordSubmitted(head.rawValue, 'retrying', result.lastError);
   } else {
