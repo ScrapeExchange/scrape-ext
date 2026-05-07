@@ -1,6 +1,6 @@
-import { STORAGE_KEYS } from '~/shared/constants';
-import { getJSON, removeKey, setJSON } from '~/shared/storage';
-import type { DedupRecord, SubmissionStatus } from '~/shared/types';
+import { STORAGE_KEYS } from '../shared/constants';
+import { getJSON, removeKey, setJSON } from '../shared/storage';
+import type { DedupRecord, SubmissionStatus } from '../shared/types';
 
 export function dedupKey(rawValue: string): string {
   return `${STORAGE_KEYS.dedupPrefix}${rawValue}`;

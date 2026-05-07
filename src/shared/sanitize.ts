@@ -2,8 +2,8 @@ import {
   API_CONTENT_RE,
   CHANNEL_ID_RE,
   HANDLE_RE,
-} from '~/shared/constants';
-import type { IdentifierKind } from '~/shared/types';
+} from './constants';
+import type { IdentifierKind } from './types';
 
 export function toApiContent(
   kind: IdentifierKind,

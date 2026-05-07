@@ -1,6 +1,6 @@
-import { RETENTION_DAYS, STORAGE_KEYS } from '~/shared/constants';
-import { getJSON, listKeysWithPrefix, removeKey, setJSON } from '~/shared/storage';
-import type { DedupRecord, HistoryEntry } from '~/shared/types';
+import { RETENTION_DAYS, STORAGE_KEYS } from '../shared/constants';
+import { getJSON, listKeysWithPrefix, removeKey, setJSON } from '../shared/storage';
+import type { DedupRecord, HistoryEntry } from '../shared/types';
 
 const DAY_MS = 86_400_000;
 

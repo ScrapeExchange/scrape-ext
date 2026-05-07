@@ -1,5 +1,5 @@
-import { extractFromUrl } from '~/content/extract';
-import type { ExtractResult } from '~/content/extract';
+import { extractFromUrl } from './extract';
+import type { ExtractResult } from './extract';
 
 const CARD_TAGS = new Set([
   'YTD-CHANNEL-RENDERER',

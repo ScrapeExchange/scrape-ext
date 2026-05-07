@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { browser } from 'wxt/browser';
-import { STORAGE_KEYS } from '~/shared/constants';
-import { listHistory } from '~/background/history';
-import { formatAmsterdamWithUTC } from '~/popup/formatTime';
-import type { HistoryEntry } from '~/shared/types';
+import { STORAGE_KEYS } from '../../src/shared/constants';
+import { listHistory } from '../../src/background/history';
+import { formatAmsterdamWithUTC } from '../../src/popup/formatTime';
+import type { HistoryEntry } from '../../src/shared/types';
 
 export function App() {
   const [entries, setEntries] = useState<HistoryEntry[]>([]);

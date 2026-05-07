@@ -6,16 +6,16 @@ import {
   PRUNE_ALARM_NAME,
   STORAGE_KEYS,
   SCHEMA_VERSION,
-} from '~/shared/constants';
-import { hasSeen, recordSeen } from '~/background/dedup';
-import { drainOnce, drainLoop } from '~/background/drain';
-import { recordHistory } from '~/background/history';
-import { enqueue, findById, unshift } from '~/background/queue';
-import { alarmIdToItemId, isRetryAlarm } from '~/background/retry';
-import { runPrune } from '~/background/prune';
-import { toApiContent } from '~/shared/sanitize';
-import { getJSON, removeKey, setJSON } from '~/shared/storage';
-import type { CandidateMessage, QueueItem } from '~/shared/types';
+} from '../shared/constants';
+import { hasSeen, recordSeen } from './dedup';
+import { drainOnce, drainLoop } from './drain';
+import { recordHistory } from './history';
+import { enqueue, findById, unshift } from './queue';
+import { alarmIdToItemId, isRetryAlarm } from './retry';
+import { runPrune } from './prune';
+import { toApiContent } from '../shared/sanitize';
+import { getJSON, removeKey, setJSON } from '../shared/storage';
+import type { CandidateMessage, QueueItem } from '../shared/types';
 
 function uuid(): string {
   return crypto.randomUUID();

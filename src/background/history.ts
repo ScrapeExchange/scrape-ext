@@ -1,10 +1,10 @@
-import { HISTORY_CAP, STORAGE_KEYS } from '~/shared/constants';
-import { getJSON, setJSON } from '~/shared/storage';
+import { HISTORY_CAP, STORAGE_KEYS } from '../shared/constants';
+import { getJSON, setJSON } from '../shared/storage';
 import type {
   HistoryEntry,
   QueueItem,
   SubmissionStatus,
-} from '~/shared/types';
+} from '../shared/types';
 
 async function load(): Promise<HistoryEntry[]> {
   return await getJSON<HistoryEntry[]>(STORAGE_KEYS.history, []);

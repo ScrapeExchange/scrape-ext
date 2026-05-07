@@ -2,9 +2,9 @@ import {
   RATE_LIMIT_PER_HOUR,
   RATE_LIMIT_PER_MINUTE,
   STORAGE_KEYS,
-} from '~/shared/constants';
-import { getJSON, setJSON } from '~/shared/storage';
-import type { RateWindow } from '~/shared/types';
+} from '../shared/constants';
+import { getJSON, setJSON } from '../shared/storage';
+import type { RateWindow } from '../shared/types';
 
 const MINUTE_MS = 60_000;
 const HOUR_MS = 3_600_000;

@@ -1,6 +1,6 @@
-import { extractFromUrl } from '~/content/extract';
-import { pairAnchor } from '~/content/pair';
-import type { CandidateMessage } from '~/shared/types';
+import { extractFromUrl } from './extract';
+import { pairAnchor } from './pair';
+import type { CandidateMessage } from '../shared/types';
 
 export interface ScanContext {
   currentUrl: string;

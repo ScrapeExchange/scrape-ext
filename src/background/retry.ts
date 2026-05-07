@@ -3,8 +3,8 @@ import {
   MAX_RETRY_ATTEMPTS,
   RETRY_ALARM_PREFIX,
   RETRY_BACKOFF_MS,
-} from '~/shared/constants';
-import type { QueueItem } from '~/shared/types';
+} from '../shared/constants';
+import type { QueueItem } from '../shared/types';
 
 export interface ScheduleResult {
   scheduled: boolean;

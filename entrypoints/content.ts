@@ -1,6 +1,6 @@
 import { browser } from 'wxt/browser';
-import { scanDocument } from '~/content/scan';
-import type { CandidateMessage } from '~/shared/types';
+import { scanDocument } from '../src/content/scan';
+import type { CandidateMessage } from '../src/shared/types';
 
 const SCAN_THROTTLE_MS = 500;
 const STUDIO_HOSTS = new Set(['studio.youtube.com']);

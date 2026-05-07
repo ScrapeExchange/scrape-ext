@@ -1,6 +1,6 @@
-import { STORAGE_KEYS } from '~/shared/constants';
-import { getJSON, setJSON } from '~/shared/storage';
-import type { QueueItem } from '~/shared/types';
+import { STORAGE_KEYS } from '../shared/constants';
+import { getJSON, setJSON } from '../shared/storage';
+import type { QueueItem } from '../shared/types';
 
 async function load(): Promise<QueueItem[]> {
   return await getJSON<QueueItem[]>(STORAGE_KEYS.queue, []);

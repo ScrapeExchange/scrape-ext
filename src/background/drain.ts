@@ -1,16 +1,16 @@
 import { browser } from 'wxt/browser';
-import { DRAIN_ALARM_NAME } from '~/shared/constants';
-import { recordSubmitted } from '~/background/dedup';
-import { updateHistoryStatus } from '~/background/history';
-import { popHead, peekHead } from '~/background/queue';
+import { DRAIN_ALARM_NAME } from '../shared/constants';
+import { recordSubmitted } from './dedup';
+import { updateHistoryStatus } from './history';
+import { popHead, peekHead } from './queue';
 import {
   canSubmitNow,
   nextAvailableAt,
   recordSubmission,
-} from '~/background/rateLimit';
-import { scheduleRetry } from '~/background/retry';
-import { submitItem } from '~/background/submit';
-import { setJSON } from '~/shared/storage';
+} from './rateLimit';
+import { scheduleRetry } from './retry';
+import { submitItem } from './submit';
+import { setJSON } from '../shared/storage';
 
 export async function drainOnce(): Promise<void> {
   const head = await peekHead();

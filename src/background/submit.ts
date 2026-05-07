@@ -1,5 +1,5 @@
-import { API_BASE, API_REQUEST_PATH } from '~/shared/constants';
-import type { QueueItem } from '~/shared/types';
+import { API_BASE, API_REQUEST_PATH } from '../shared/constants';
+import type { QueueItem } from '../shared/types';
 
 export type SubmitOutcome = 'accepted' | 'retry' | 'terminal';
 
