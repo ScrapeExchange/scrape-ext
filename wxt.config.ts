@@ -13,5 +13,9 @@ export default defineConfig({
       '*://*.youtube.com/*',
       'https://scrape.exchange/*',
     ],
+    action: {
+      default_title: 'Scrape.Exchange',
+      default_popup: 'popup.html',
+    },
   },
 });
