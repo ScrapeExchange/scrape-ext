@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Scrape.Exchange</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+        font-size: 13px;
+        width: 360px;
+        max-height: 480px;
+        overflow-y: auto;
+        background: #fafafa;
+        color: #111;
+      }
+      header {
+        padding: 8px 12px;
+        background: #111;
+        color: #fff;
+        font-weight: 600;
+      }
+      ul { list-style: none; margin: 0; padding: 0; }
+      li {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 12px;
+        border-bottom: 1px solid #eee;
+      }
+      .id { font-family: ui-monospace, Menlo, monospace; word-break: break-all; }
+      .ts { color: #666; font-size: 11px; white-space: nowrap; }
+      .chip {
+        display: inline-block;
+        padding: 1px 6px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .chip-accepted { background: #dcfce7; color: #166534; }
+      .chip-queued   { background: #e5e7eb; color: #374151; }
+      .chip-retrying { background: #fef3c7; color: #92400e; }
+      .chip-failed   { background: #fee2e2; color: #991b1b; }
+      .empty { padding: 24px 12px; text-align: center; color: #666; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./main.tsx"></script>
+  </body>
+</html>
