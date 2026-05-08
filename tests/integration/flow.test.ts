@@ -65,4 +65,17 @@ describe('end-to-end happy path', () => {
     await _internal.handleCandidate(msg);
     expect(fetchMock).not.toHaveBeenCalled();
   });
+
+  it('two concurrent candidates with the same rawValue produce only one POST', async () => {
+    const msg: CandidateMessage = {
+      type: 'youtube/channel-candidate',
+      channel_id: 'UCBJycsmduvYEL83R_U4JriQ',
+      sourceUrl: 'https://www.youtube.com/',
+    };
+    await Promise.all([
+      _internal.handleCandidate(msg),
+      _internal.handleCandidate(msg),
+    ]);
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
 });

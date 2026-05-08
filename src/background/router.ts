@@ -34,7 +34,7 @@ function pickRawValue(msg: CandidateMessage):
   return null;
 }
 
-async function handleCandidate(msg: CandidateMessage): Promise<void> {
+async function handleCandidateImpl(msg: CandidateMessage): Promise<void> {
   const picked = pickRawValue(msg);
   if (!picked) return;
 
@@ -59,6 +59,17 @@ async function handleCandidate(msg: CandidateMessage): Promise<void> {
   await enqueue(item);
   await recordHistory(item, 'queued');
   await drainLoop();
+}
+
+// Serialize candidate handling. Without this, two concurrent messages with
+// the same rawValue can both pass `hasSeen` before either calls `recordSeen`,
+// producing duplicate POSTs.
+let candidateChain: Promise<void> = Promise.resolve();
+
+function handleCandidate(msg: CandidateMessage): Promise<void> {
+  const next = candidateChain.then(() => handleCandidateImpl(msg));
+  candidateChain = next.catch(() => undefined);
+  return next;
 }
 
 async function handleRetryAlarm(itemId: string): Promise<void> {

@@ -67,4 +67,24 @@ describe('scanDocument', () => {
     const cidMessages = sent.filter((m) => m.channel_id === 'UCBJycsmduvYEL83R_U4JriQ');
     expect(cidMessages).toHaveLength(1);
   });
+
+  it('on /@handle page with canonical channel_id, emits only the channel_id (not the handle) for the visited channel', async () => {
+    document.head.innerHTML = `
+      <link rel="canonical" href="https://www.youtube.com/channel/UCR6fEDtZ7_McUwc1fI8_xKw">
+      <meta property="og:url" content="https://www.youtube.com/channel/UCR6fEDtZ7_McUwc1fI8_xKw">
+    `;
+    const sent: CandidateMessage[] = [];
+    await scanDocument({
+      currentUrl: 'https://www.youtube.com/@briantylercohenespanol',
+      sendMessage: async (m) => { sent.push(m); },
+    });
+    const handleForVisited = sent.filter(
+      (m) => m.handle === '@briantylercohenespanol',
+    );
+    const idForVisited = sent.filter(
+      (m) => m.channel_id === 'UCR6fEDtZ7_McUwc1fI8_xKw',
+    );
+    expect(handleForVisited).toHaveLength(0);
+    expect(idForVisited).toHaveLength(1);
+  });
 });

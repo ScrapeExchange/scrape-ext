@@ -11,6 +11,7 @@ export default defineContentScript({
     if (STUDIO_HOSTS.has(location.hostname)) return;
 
     const emitted = new Set<string>();
+    const processedAnchors = new WeakSet<HTMLAnchorElement>();
     let timer: number | null = null;
 
     function schedule(): void {
@@ -27,6 +28,7 @@ export default defineContentScript({
             }
           },
           emitted,
+          processedAnchors,
         });
       }, SCAN_THROTTLE_MS);
     }
@@ -34,6 +36,11 @@ export default defineContentScript({
     schedule();
 
     window.addEventListener('yt-navigate-finish', schedule);
+    // Scroll is YouTube's infinite-scroll trigger; the throttled scan picks
+    // up newly-loaded feed cards. A document.body subtree MutationObserver
+    // would catch the same content but fires on every animation/thumbnail
+    // mutation YouTube makes — far too expensive.
+    window.addEventListener('scroll', schedule, { passive: true });
 
     const titleEl = document.querySelector('title');
     if (titleEl) {

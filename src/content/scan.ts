@@ -6,41 +6,47 @@ export interface ScanContext {
   currentUrl: string;
   sendMessage: (msg: CandidateMessage) => Promise<void>;
   emitted?: Set<string>;
+  processedAnchors?: WeakSet<HTMLAnchorElement>;
 }
 
 export async function scanDocument(ctx: ScanContext): Promise<void> {
   const seen = ctx.emitted ?? new Set<string>();
   if (!ctx.emitted) ctx.emitted = seen;
+  const processed = ctx.processedAnchors ?? new WeakSet<HTMLAnchorElement>();
+  if (!ctx.processedAnchors) ctx.processedAnchors = processed;
 
   const fromCurrent = extractFromUrl(ctx.currentUrl);
-  if (fromCurrent.channel_id || fromCurrent.handle) {
-    await emit(ctx, seen, fromCurrent.channel_id, fromCurrent.handle);
-  }
 
   const canonical = document.querySelector<HTMLLinkElement>(
     'link[rel="canonical"]',
   );
-  if (canonical?.href) {
-    const r = extractFromUrl(canonical.href);
-    if (r.channel_id || r.handle) {
-      await emit(ctx, seen, r.channel_id, r.handle);
-    }
-  }
+  const fromCanonical = canonical?.href
+    ? extractFromUrl(canonical.href)
+    : {};
 
   const og = document.querySelector<HTMLMetaElement>(
     'meta[property="og:url"]',
   );
-  if (og?.content) {
-    const r = extractFromUrl(og.content);
-    if (r.channel_id || r.handle) {
-      await emit(ctx, seen, r.channel_id, r.handle);
-    }
+  const fromOg = og?.content ? extractFromUrl(og.content) : {};
+
+  // The visited page is one channel — prefer canonical/og channel_id over
+  // the URL's handle, otherwise the same channel produces two candidates
+  // (a `@handle` and a `UCxxx`) that look distinct to the dedup map.
+  const pageChannelId =
+    fromCanonical.channel_id ?? fromOg.channel_id ?? fromCurrent.channel_id;
+  const pageHandle = pageChannelId
+    ? undefined
+    : (fromCurrent.handle ?? fromCanonical.handle ?? fromOg.handle);
+  if (pageChannelId || pageHandle) {
+    await emit(ctx, seen, pageChannelId, pageHandle);
   }
 
   const anchors = document.querySelectorAll<HTMLAnchorElement>(
     'a[href*="/channel/"], a[href*="/@"]',
   );
   for (const a of anchors) {
+    if (processed.has(a)) continue;
+    processed.add(a);
     const paired = pairAnchor(a);
     if (paired.channel_id || paired.handle) {
       await emit(ctx, seen, paired.channel_id, paired.handle);
