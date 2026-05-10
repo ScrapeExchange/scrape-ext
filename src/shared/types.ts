@@ -5,6 +5,7 @@ export type SubmissionStatus =
   | 'queued'
   | 'retrying'
   | 'accepted'
+  | 'duplicate'
   | 'failed';
 
 export interface QueueItem {

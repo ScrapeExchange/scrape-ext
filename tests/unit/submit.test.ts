@@ -32,6 +32,14 @@ describe('submitItem', () => {
     expect(result).toEqual({ outcome: 'accepted' });
   });
 
+  it('returns duplicate on 200', async () => {
+    fetchMock.mockResolvedValueOnce(
+      new Response(JSON.stringify({ status: 'duplicate' }), { status: 200 }),
+    );
+    const result = await submitItem(makeItem());
+    expect(result).toEqual({ outcome: 'duplicate' });
+  });
+
   it('POSTs to the correct URL with correct body', async () => {
     fetchMock.mockResolvedValueOnce(
       new Response('{}', { status: 201 }),

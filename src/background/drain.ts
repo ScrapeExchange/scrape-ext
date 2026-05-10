@@ -34,6 +34,13 @@ export async function drainOnce(): Promise<void> {
     return;
   }
 
+  if (result.outcome === 'duplicate') {
+    await recordSubmission();
+    await updateHistoryStatus(head.id, 'duplicate');
+    await recordSubmitted(head.rawValue, 'duplicate');
+    return;
+  }
+
   if (result.outcome === 'terminal') {
     await recordSubmission();
     await updateHistoryStatus(head.id, 'failed', result.lastError);

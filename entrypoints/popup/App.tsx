@@ -28,7 +28,9 @@ export function App() {
 
   return (
     <>
-      <header>Scrape.Exchange — last {entries.length} submissions</header>
+      <header>
+        Scrape.Exchange — last <span className="count">{entries.length}</span> submissions
+      </header>
       {entries.length === 0 ? (
         <div className="empty">Nothing submitted yet. Visit any YouTube page.</div>
       ) : (

@@ -1,7 +1,7 @@
 import { API_BASE, API_REQUEST_PATH } from '../shared/constants';
 import type { QueueItem } from '../shared/types';
 
-export type SubmitOutcome = 'accepted' | 'retry' | 'terminal';
+export type SubmitOutcome = 'accepted' | 'duplicate' | 'retry' | 'terminal';
 
 export interface SubmitResult {
   outcome: SubmitOutcome;
@@ -22,6 +22,7 @@ export async function submitItem(item: QueueItem): Promise<SubmitResult> {
   }
 
   if (response.status === 201) return { outcome: 'accepted' };
+  if (response.status === 200) return { outcome: 'duplicate' };
   if (response.status >= 500 || response.status === 429) {
     return { outcome: 'retry', lastError: `HTTP ${response.status}` };
   }

@@ -100,7 +100,11 @@ export function registerHandlers(): void {
   browser.runtime.onMessage.addListener((message, _sender) => {
     const msg = message as Partial<CandidateMessage> | null;
     if (msg && msg.type === 'youtube/channel-candidate') {
-      void handleCandidate(msg as CandidateMessage);
+      // Return the promise so Chrome MV3 keeps the service worker alive
+      // until handleCandidate finishes (including the fetch). With
+      // fire-and-forget (`void handleCandidate(...)`) the SW saw the
+      // listener return undefined and could suspend before the POST fired.
+      return handleCandidate(msg as CandidateMessage);
     }
     return undefined;
   });

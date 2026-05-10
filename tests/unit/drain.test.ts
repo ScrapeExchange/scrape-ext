@@ -52,6 +52,15 @@ describe('drainOnce', () => {
     expect(hist[0]?.status).toBe('accepted');
   });
 
+  it('on 200 (duplicate): removes from queue, marks duplicate in history', async () => {
+    fetchMock.mockResolvedValue(new Response('{}', { status: 200 }));
+    await enqueueWithHistory(item('a'));
+    await drainOnce();
+    expect(await size()).toBe(0);
+    const hist = await listHistory();
+    expect(hist[0]?.status).toBe('duplicate');
+  });
+
   it('on retry outcome: schedules retry alarm and removes from queue', async () => {
     fetchMock.mockResolvedValue(new Response('', { status: 503 }));
     await enqueueWithHistory(item('a', 0));
